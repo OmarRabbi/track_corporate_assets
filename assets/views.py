@@ -1,7 +1,26 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from rest_framework import viewsets
+from django.db import IntegrityError
 from .models import Company, Employee, Asset, DeviceLog
+from .serializers import CompanySerializer, EmployeeSerializer, AssetSerializer, DeviceLogSerializer
 # Create your views here.
+
+# Viewsets for REST API
+class CompanyViewSet(viewsets.ModelViewSet):
+    queryset = Company.objects.all()
+    serializer_class = CompanySerializer
+
+class EmployeeViewSet(viewsets.ModelViewSet):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+class AssetViewSet(viewsets.ModelViewSet):
+    queryset = Asset.objects.all()
+    serializer_class = AssetSerializer
+
+class DeviceLogViewSet(viewsets.ModelViewSet):
+    queryset = DeviceLog.objects.all()
+    serializer_class = DeviceLogSerializer
 
 # Views for rendering templates
 def company_list(request):
@@ -10,12 +29,18 @@ def company_list(request):
 
 def add_company(request):
     if request.method == 'POST':
-        name = request.POST.get('companyName')  # Corrected form field name
-        Company.objects.create(name=name)
-        return redirect('company_list')  # Redirect to company list after adding
+        name = request.POST.get('companyName')  # Corrected parameter name
+        if name:
+            try:
+                Company.objects.create(name=name)
+            except IntegrityError as e:
+                return render(request, 'add_company.html', {'error_message': str(e)})
+            return redirect('company_list')  # Redirect to company list after adding
+        else:
+            return render(request, 'add_company.html', {'error_message': 'Company name cannot be empty'})
     else:
         return render(request, 'add_company.html')
-
+    
 def update_company(request, company_id):
     company = get_object_or_404(Company, id=company_id)
     if request.method == 'POST':

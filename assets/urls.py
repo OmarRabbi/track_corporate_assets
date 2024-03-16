@@ -1,8 +1,18 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from . import views 
-# URL patterns for Django views
-urlpatterns = [    
+from .views import CompanyViewSet, EmployeeViewSet, AssetViewSet, DeviceLogViewSet
+from . import views  # Import views module to access the Django views
+
+router = DefaultRouter()
+router.register(r'companies', CompanyViewSet)
+router.register(r'employees', EmployeeViewSet)
+router.register(r'assets', AssetViewSet)
+router.register(r'devicelogs', DeviceLogViewSet)
+urlpatterns = [  
+    # URL patterns for REST API endpoints
+    path('', include(router.urls)),
+
+    # URL patterns for Django views
     path('company-list/', views.company_list, name='company_list'),
     path('add-company/', views.add_company, name='add_company'),
     path('company/<int:company_id>/update/', views.update_company, name='update_company'),
