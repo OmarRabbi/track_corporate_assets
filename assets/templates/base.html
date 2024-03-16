@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Corporate Asset Tracking System{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <header class="bg-primary text-white p-3">
+        <h1 class="text-center">Corporate Asset Tracking System</h1>
+    </header>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'add_company' %}">Add Companies</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'add_employee' %}">Add Employees</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'add_asset' %}">Add Assets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'add_device_log' %}">Add Device Logs</a>
+                </li>
+            </ul>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'company_list' %}">Companies List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'employee_list' %}">Employees List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'asset_list' %}">Assets List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'device_log_list' %}">Device Logs List</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

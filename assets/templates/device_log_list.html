@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Device Logs - Corporate Asset Tracking System{% endblock %}
+
+{% block content %}
+    <h2>Device Logs</h2>
+    <div class="list-group">
+        {% for device_log in device_logs %}
+            <a href="#" class="list-group-item list-group-item-action">
+                <h5 class="mb-1">{{ device_log.asset.name }}</h5>
+                <p class="mb-1">Checked out by {{ device_log.checked_out_by }} at {{ device_log.checked_out_at }}</p>
+                <div class="btn-group" role="group" aria-label="Device Log Actions">
+                    <a href="{% url 'update_device_log' device_log.id %}" class="btn btn-primary">Update</a>
+                    <form action="{% url 'delete_device_log' device_log.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Company - Corporate Asset Tracking System{% endblock %}
+
+{% block content %}
+    <h2>Add Company</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="companyName">Company Name:</label>
+            <input type="text" class="form-control" id="companyName" name="companyName" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Company</button>
+    </form>
+    
+{% endblock %}

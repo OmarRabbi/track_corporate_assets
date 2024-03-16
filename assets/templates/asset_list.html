@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Assets - Corporate Asset Tracking System{% endblock %}
+
+{% block content %}
+    <h2>Assets</h2>
+    <div class="list-group">
+        {% for asset in assets %}
+            <a href="#" class="list-group-item list-group-item-action">
+                <h5 class="mb-1">{{ asset.name }}</h5>
+                <p class="mb-1">{{ asset.description }}</p>
+                <div class="btn-group" role="group" aria-label="Asset Actions">
+                    <a href="{% url 'update_asset' asset.id %}" class="btn btn-primary">Update</a>
+                    <form action="{% url 'delete_asset' asset.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

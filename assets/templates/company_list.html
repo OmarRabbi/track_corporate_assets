@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Companies - Corporate Asset Tracking System{% endblock %}
+
+{% block content %}
+    <h2>Companies</h2>
+    <div class="list-group">
+        {% for company in companies %}
+        <a href="#" class="list-group-item list-group-item-action">
+            <h5 class="mb-1">{{ company.name }}</h5>
+                <div class="btn-group" role="group" aria-label="Company Actions">
+                    <a href="{% url 'update_company' company.id %}" class="btn btn-primary">Update</a>
+                    <form action="{% url 'delete_company' company.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </a>
+        {% endfor %}
+        </div>
+{% endblock %}

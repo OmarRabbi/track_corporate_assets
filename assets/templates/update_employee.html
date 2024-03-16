@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Employee - Corporate Asset Tracking System{% endblock %}
+
+{% block content %}
+    <h2>Update Employee</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="employee_name">Employee Name:</label>
+            <input type="text" class="form-control" id="employee_name" name="employee_name" value="{{ employee.name }}" required>
+        </div>
+        <div class="form-group">
+            <label for="company_id">Company:</label>
+            <select class="form-control" id="company_id" name="company_id" required>
+                <option value="">Select Company</option>
+                {% for company in companies %}
+                    <option value="{{ company.id }}" {% if company.id == employee.company.id %} selected {% endif %}>{{ company.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Employee</button>
+    </form>
+{% endblock %}

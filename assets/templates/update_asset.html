@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Asset - Corporate Asset Tracking System{% endblock %}
+
+{% block content %}
+    <h2>Update Asset</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="asset_name">Asset Name:</label>
+            <input type="text" class="form-control" id="asset_name" name="asset_name" value="{{ asset.name }}" required>
+        </div>
+        <div class="form-group">
+            <label for="asset_description">Description:</label>
+            <textarea class="form-control" id="asset_description" name="asset_description" rows="3" required>{{ asset.description }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Asset</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Asset - Corporate Asset Tracking System{% endblock %}
+
+{% block content %}
+    <h2>Add Asset</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="assetName">Asset Name:</label>
+            <input type="text" class="form-control" id="assetName" name="assetName" required>
+        </div>
+        <div class="form-group">
+            <label for="assetDescription">Description:</label>
+            <textarea class="form-control" id="assetDescription" name="assetDescription" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="assigned_to_id">Assigned To:</label>
+            <select class="form-control" id="assigned_to_id" name="assigned_to_id" required>
+                <option value="">Select Employee</option>
+                {% for employee in employees %}
+                    <option value="{{ employee.id }}">{{ employee.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Asset</button>
+    </form>
+    
+{% endblock %}

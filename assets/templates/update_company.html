@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Company - Corporate Asset Tracking System{% endblock %}
+
+{% block content %}
+    <h2>Update Company</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="company_name">Company Name:</label>
+            <input type="text" class="form-control" id="company_name" name="company_name" value="{{ company.name }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Company</button>
+    </form>
+{% endblock %}

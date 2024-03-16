@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Device Log - Corporate Asset Tracking System{% endblock %}
+
+{% block content %}
+    <h2>Update Device Log</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="asset_id">Asset:</label>
+            <select class="form-control" id="asset_id" name="asset_id" required>
+                <option value="">Select Asset</option>
+                {% for asset in assets %}
+                    <option value="{{ asset.id }}" {% if asset.id == device_log.asset_id %} selected {% endif %}>{{ asset.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="checked_out_by">Checked Out By:</label>
+            <input type="text" class="form-control" id="checked_out_by" name="checked_out_by" value="{{ device_log.checked_out_by }}" required>
+        </div>
+        <div class="form-group">
+            <label for="checked_out_at">Checked Out At:</label>
+            <input type="datetime-local" class="form-control" id="checked_out_at" name="checked_out_at" value="{{ device_log.checked_out_at|date:'Y-m-d\TH:i' }}" required>
+        </div>
+        <div class="form-group">
+            <label for="checked_in_by_id">Checked In By:</label>
+            <select class="form-control" id="checked_in_by_id" name="checked_in_by_id" required>
+                <option value="">Select Employee</option>
+                {% for employee in employees %}
+                    <option value="{{ employee.id }}" {% if employee.id == checked_in_by_id %} selected {% endif %}>{{ employee.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="checked_in_at">Checked In At:</label>
+            <input type="datetime-local" class="form-control" id="checked_in_at" name="checked_in_at" value="{{ checked_in_at }}" required>
+        </div>
+        <div class="form-group">
+            <label for="condition_when_checked_in">Condition When Checked In:</label>
+            <textarea class="form-control" id="condition_when_checked_in" name="condition_when_checked_in" rows="3" required>{{ condition_when_checked_in }}</textarea>
+        </div> 
+        <div class="form-group">
+            <label for="condition_when_checked_out">Condition When Checked Out:</label>
+            <textarea class="form-control" id="condition_when_checked_out" name="condition_when_checked_out" rows="3" required>{{ device_log.condition_when_checked_out }}</textarea>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Update Device Log</button>
+    </form>    
+{% endblock %}

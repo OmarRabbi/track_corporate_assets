@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Device Log - Corporate Asset Tracking System{% endblock %}
+
+{% block content %}
+    <h2>Add Device Log</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="asset_id">Asset:</label>
+            <select class="form-control" id="asset_id" name="asset_id" required>
+                <option value="">Select Asset</option>
+                {% for asset in assets %}
+                    <option value="{{ asset.id }}">{{ asset.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="checked_in_by_id">Checked In By:</label>
+            <select class="form-control" id="checked_in_by_id" name="checked_in_by_id">
+                <option value="">Select Employee</option>
+                {% for employee in employees %}
+                    <option value="{{ employee.id }}">{{ employee.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="checked_in_at">Checked In At:</label>
+            <input type="datetime-local" class="form-control" id="checked_in_at" name="checked_in_at">
+        </div>
+        <div class="form-group">
+            <label for="checked_out_by_id">Checked Out By:</label>
+            <select class="form-control" id="checked_out_by_id" name="checked_out_by_id" required>
+                <option value="">Select Employee</option>
+                {% for employee in employees %}
+                    <option value="{{ employee.id }}">{{ employee.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="checked_out_at">Checked Out At:</label>
+            <input type="datetime-local" class="form-control" id="checked_out_at" name="checked_out_at" required>
+        </div>
+        <div class="form-group">
+            <label for="condition_when_checked_out">Condition When Checked Out:</label>
+            <textarea class="form-control" id="condition_when_checked_out" name="condition_when_checked_out" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="condition_when_checked_in">Condition When Checked In:</label>
+            <textarea class="form-control" id="condition_when_checked_in" name="condition_when_checked_in" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Device Log</button>
+    </form>
+{% endblock %}
