@@ -1,19 +1,20 @@
 from django.urls import reverse
+from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APITestCase
 from .models import Company, Employee
 
-class CRUDTestCase(APITestCase):
+class CRUDTestCase(TestCase):
     def setUp(self):
-        self.company_data = {'name': 'Test Company'}
-        self.employee_data = {'name': 'Test Employee', 'company': None}
+        # Create a company for testing
+        self.company = Company.objects.create(name='Test Company')
+        self.employee_data = {'employeeName': 'Test Employee', 'companyId': self.company.pk}  # Use the actual ID of the created company
 
     def test_company_CRUD(self):
-        # Test creating a new company
-        response = self.client.post(reverse('add-company'), self.company_data)
-        self.assertEqual(response.status_code, status.HTTP_302_FOUND)  # Redirect after creating
+        response = self.client.post(reverse('add_company'), {'companyName': 'Test Company'})
+        self.assertRedirects(response, reverse('company_list'))  # Check if redirected to company list after creation
+        self.assertEqual(Company.objects.count(), 2)  # Check if the company is created
 
     def test_employee_CRUD(self):
-        # Test creating a new employee
-        response = self.client.post(reverse('add-employee'), self.employee_data)
-        self.assertEqual(response.status_code, status.HTTP_302_FOUND)  # Redirect after creating
+        response = self.client.post(reverse('add_employee'), self.employee_data)
+        self.assertRedirects(response, reverse('employee_list'))  # Check if redirected to employee list after creation
+        self.assertEqual(Employee.objects.count(), 1)  # Check if the employee is created

@@ -1,4 +1,5 @@
 from django.urls import path, include
+from rest_framework_swagger.views import get_swagger_view
 from rest_framework.routers import DefaultRouter
 from .views import CompanyViewSet, EmployeeViewSet, AssetViewSet, DeviceLogViewSet
 from . import views  # Import views module to access the Django views
@@ -8,10 +9,11 @@ router.register(r'companies', CompanyViewSet)
 router.register(r'employees', EmployeeViewSet)
 router.register(r'assets', AssetViewSet)
 router.register(r'devicelogs', DeviceLogViewSet)
+schema_view = get_swagger_view(title='API Documentation')
 urlpatterns = [  
     # URL patterns for REST API endpoints
     path('', include(router.urls)),
-
+    path('swagger-docs/', schema_view),
     # URL patterns for Django views
     path('company-list/', views.company_list, name='company_list'),
     path('add-company/', views.add_company, name='add_company'),
